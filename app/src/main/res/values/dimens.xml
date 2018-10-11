@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="default_text_view_size">18sp</dimen>
+    <dimen name="default_body_size">14sp</dimen>
+    <dimen name="base_padding">10sp</dimen>
+    <dimen name="progress_bar_height">35sp</dimen>
+    <dimen name="error_page_padding">60sp</dimen>
+</resources>

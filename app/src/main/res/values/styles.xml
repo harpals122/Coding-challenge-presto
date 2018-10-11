@@ -1,11 +1,65 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="@android:style/Theme.DeviceDefault.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="NoActionBar" parent="@android:style/Theme">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="DefaultTextStyle" parent="Header">
+        <item name="android:fontFamily">@font/avenir_next_bold</item>
+    </style>
+
+    <style name="Header">
+        <item name="android:fontFamily">@font/app_title3</item>
+        <item name="android:textSize">@dimen/default_text_view_size</item>
+        <item name="android:textColor">@color/text_view_default_color</item>
+    </style>
+
+    <style name="RetryButtonStyle">
+        <item name="android:fontFamily">@font/app_title3</item>
+        <item name="android:textSize">@dimen/default_text_view_size</item>
+        <item name="android:padding">@dimen/retry_button_padding</item>
+        <item name="android:background">@color/black_overlay</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">@dimen/error_button_layout_margin</item>
+        <item name="android:text">@string/retry</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+    <style name="DefaultBodyTextStyle" parent="BodyStyle">
+        <item name="android:fontFamily">@font/avenir_next_medium</item>
+    </style>
+
+
+    <style name="BodyStyle">
+        <item name="android:fontFamily">@font/app_body</item>
+        <item name="android:textSize">@dimen/default_body_size</item>
+        <item name="android:textColor">@color/text_view_default_color</item>
+    </style>
+
+    <style name="FullScreenTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/FullScreenActionBarStyle</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
+        <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
+    </style>
+
+    <style name="FullScreenActionBarStyle" parent="android:Widget.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+    </style>
+
+
+    <dimen name="error_button_layout_margin">20dp</dimen>
+    <dimen name="retry_button_padding">10dp</dimen>
 </resources>
+

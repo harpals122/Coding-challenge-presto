@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/retry_parent_view"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_centerInParent="true"
+    android:orientation="vertical"
+    android:padding="@dimen/error_page_padding">
+
+    <ImageView
+        android:layout_width="200sp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:contentDescription="@string/disconnected"
+        android:src="@drawable/disconnected" />
+
+    <TextView
+        style="@style/Theme.AppCompat.DayNight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/oh_no"
+        android:textSize="@dimen/default_text_view_size" />
+
+    <TextView
+        style="@style/BodyStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/something_went_wrong"
+        android:textAlignment="center" />
+
+    <Button
+        android:id="@+id/retry"
+        style="@style/RetryButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
