@@ -4,25 +4,69 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
+    android:background="#1000"
     app:cardCornerRadius="4dp">
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/parent_constraint"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+ <RelativeLayout
+     android:layout_width="match_parent"
+     android:layout_height="match_parent">
+     <TextView
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         style="@style/Header"
+         android:id="@+id/title"
+         android:layout_marginLeft="20dp"
+         android:layout_marginTop="4dp"
+         android:layout_marginBottom="5dp"
+
+         />
 
         <ImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             android:scaleType="fitXY"
             android:layout_marginBottom="8dp"
             android:contentDescription="@string/unsplash_image"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_below="@+id/title"
+         />
 
-    </android.support.constraint.ConstraintLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginLeft="20dp"
+        android:layout_below="@+id/image">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/BodyStyle"
+            android:id="@+id/size"
+            android:layout_weight=".8"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@+id/title"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/BodyStyle"
+            android:layout_weight="1.2"
+            android:id="@+id/image_dimensions"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@+id/size"/>
+
+    </LinearLayout>
+
+
+ </RelativeLayout>
 
 </android.support.v7.widget.CardView>

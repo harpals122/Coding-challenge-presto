@@ -1,5 +1,6 @@
 package com.example.harpalsingh.fabgallery.interfaces;
 
+import com.example.harpalsingh.fabgallery.models.ImageSizeData;
 import com.example.harpalsingh.fabgallery.models.PhotoData;
 
 import retrofit2.Call;
@@ -15,5 +16,14 @@ public interface PhotosInterface {
                               @Query("nojsoncallback") int nojsoncallback,
                               @Query("auth_token") String page_number,
                               @Query("api_sig") String client_id);
-    }
+
+    @GET(SEARCH_PHOTO)
+    Call<ImageSizeData> getImageSizeData(@Query("method") String method,
+                                         @Query("api_key") String api_key,
+                                         @Query("photo_id") String photo_id,
+                                         @Query("format") String format,
+                                         @Query("nojsoncallback") int nojsoncallback,
+                                         @Query("auth_token") String auth_token,
+                                         @Query("api_sig") String api_sig);
+}
 
