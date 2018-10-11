@@ -15,58 +15,41 @@
          android:layout_height="wrap_content"
          style="@style/Header"
          android:id="@+id/title"
-         android:layout_marginLeft="20dp"
-         android:layout_marginTop="4dp"
-         android:layout_marginBottom="5dp"
-
-         />
+         android:layout_margin="7dp" />
 
         <ImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="230dp"
             android:scaleType="fitXY"
-            android:layout_marginBottom="8dp"
+            android:layout_margin="7dp"
             android:contentDescription="@string/unsplash_image"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_below="@+id/title"
-         />
+            android:layout_below="@+id/title" />
 
-
-
-    <LinearLayout
+     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="2"
-        android:layout_marginLeft="20dp"
+        android:layout_margin="7dp"
         android:layout_below="@+id/image">
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             style="@style/BodyStyle"
             android:id="@+id/size"
-            android:layout_weight=".8"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_weight="1"
             android:layout_below="@+id/title"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             style="@style/BodyStyle"
-            android:layout_weight="1.2"
+            android:layout_weight="1"
             android:id="@+id/image_dimensions"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
             android:layout_below="@+id/size"/>
 
     </LinearLayout>
-
-
  </RelativeLayout>
 
 </android.support.v7.widget.CardView>
