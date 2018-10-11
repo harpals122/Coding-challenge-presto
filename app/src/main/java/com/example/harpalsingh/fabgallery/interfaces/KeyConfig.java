@@ -6,7 +6,7 @@ public interface KeyConfig {
     String format = "json";
     String method = "flickr.photos.search";
     String auth_token = "72157696432638430-a5c671627a282aa4";
-    String api_sig = "15fe7ba367571e4fd12c4a2dea7dd239";
+    String api_sig = "748051e95c570c83e4250043c3d08e17";
     int nojsoncallback = 1;
     String noInternetConnectionMessage = "No Internet Connection Please Try Again!";
     String networkCallFailMessage = "Something went wrong please try again";

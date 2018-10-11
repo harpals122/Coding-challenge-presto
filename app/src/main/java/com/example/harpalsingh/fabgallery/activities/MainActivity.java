@@ -21,16 +21,23 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.harpalsingh.fabgallery.R;
+import com.example.harpalsingh.fabgallery.genericApiCalls.GenericApiCalls;
+import com.example.harpalsingh.fabgallery.genericEventBus.GenericEventBus;
 import com.example.harpalsingh.fabgallery.utilities.NetworkStateChangeReceiver;
 import com.example.harpalsingh.fabgallery.utilities.Utilities;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity   {
 
     private final Handler handler = new Handler();
     private final int initial_count = 1;
@@ -66,6 +73,9 @@ public class MainActivity extends AppCompatActivity  {
 
         Utilities.setupToolbarAndNavigationBar(this, toolbar, navigationView, drawerLayout);
 
+        //Utilities.doNetworkRequest(MainActivity.this, parentView);
+
+
         setupRecyclerView();
     }
 
@@ -82,7 +92,14 @@ public class MainActivity extends AppCompatActivity  {
     @Override
     public void onStart() {
         super.onStart();
+        EventBus.getDefault().register(this);
         Utilities.registerNetworkStateChangerReciever(this, networkBroadcast);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -91,6 +108,11 @@ public class MainActivity extends AppCompatActivity  {
         unregisterReceiver(networkBroadcast);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(GenericEventBus event) {
+
+        Toast.makeText(getApplicationContext(),""+event.getPhotoData().getPhotos().getPhoto().get(0),Toast.LENGTH_LONG).show();
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -103,5 +125,6 @@ public class MainActivity extends AppCompatActivity  {
 
     @OnClick(R.id.retry)
     public void retry(View view) {
+        Utilities.doNetworkRequest(MainActivity.this, parentView);
     }
 }
