@@ -4,8 +4,6 @@ import com.example.harpalsingh.fabgallery.interfaces.KeyConfig;
 import com.example.harpalsingh.fabgallery.interfaces.PhotosInterface;
 import com.example.harpalsingh.fabgallery.models.PhotoData;
 
-import java.util.List;
-
 import retrofit2.Call;
 
 public class RetrofitServices {
@@ -23,7 +21,7 @@ public class RetrofitServices {
     }
 
     public Call<PhotoData> getPhotos() {
-        return RetrofitAPIClient.APIClient().create(PhotosInterface.class).getPhotos(KeyConfig.method,
-                KeyConfig.api_key,KeyConfig.format,KeyConfig.nojsoncallback,KeyConfig.auth_token,KeyConfig.api_sig);
+        return RetrofitAPIClient.APIClient().create(PhotosInterface.class).getPhotos(KeyConfig.searchMethod,
+                KeyConfig.api_key, KeyConfig.format, KeyConfig.nojsoncallback, KeyConfig.auth_token, KeyConfig.api_sig);
     }
 }

@@ -15,4 +15,5 @@ public interface PhotosInterface {
                               @Query("nojsoncallback") int nojsoncallback,
                               @Query("auth_token") String page_number,
                               @Query("api_sig") String client_id);
-}
+    }
+

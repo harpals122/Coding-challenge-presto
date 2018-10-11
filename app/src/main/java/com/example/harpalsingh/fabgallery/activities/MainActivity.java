@@ -1,11 +1,7 @@
 package com.example.harpalsingh.fabgallery.activities;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Parcelable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -17,15 +13,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.example.harpalsingh.fabgallery.R;
-import com.example.harpalsingh.fabgallery.genericApiCalls.GenericApiCalls;
+import com.example.harpalsingh.fabgallery.adapters.GridViewAdapter;
 import com.example.harpalsingh.fabgallery.genericEventBus.GenericEventBus;
+import com.example.harpalsingh.fabgallery.models.Photos;
 import com.example.harpalsingh.fabgallery.utilities.NetworkStateChangeReceiver;
 import com.example.harpalsingh.fabgallery.utilities.Utilities;
 
@@ -39,9 +34,6 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity   {
 
-    private final Handler handler = new Handler();
-    private final int initial_count = 1;
-    private final String recyclerViewStateStateKey = "recyclerViewState";
     @BindView(R.id.app_drawer_layout)
     DrawerLayout drawerLayout;
     @BindView(R.id.toolbar)
@@ -61,6 +53,7 @@ public class MainActivity extends AppCompatActivity   {
     @BindView(R.id.retry)
     Button retry;
     private BroadcastReceiver networkBroadcast;
+    private GridViewAdapter gridAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,14 +66,13 @@ public class MainActivity extends AppCompatActivity   {
 
         Utilities.setupToolbarAndNavigationBar(this, toolbar, navigationView, drawerLayout);
 
-        //Utilities.doNetworkRequest(MainActivity.this, parentView);
-
+        Utilities.doNetworkRequest(MainActivity.this, parentView);
 
         setupRecyclerView();
     }
 
     private void setupRecyclerView() {
-        final StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, 1);
+        final StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, 1);
         staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
 
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
@@ -110,9 +102,11 @@ public class MainActivity extends AppCompatActivity   {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(GenericEventBus event) {
-
-        Toast.makeText(getApplicationContext(),""+event.getPhotoData().getPhotos().getPhoto().get(0),Toast.LENGTH_LONG).show();
+        Photos photos = event.getPhotoData().getPhotos();
+        gridAdapter = new GridViewAdapter(this,photos);
+        recyclerView.setAdapter(gridAdapter);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

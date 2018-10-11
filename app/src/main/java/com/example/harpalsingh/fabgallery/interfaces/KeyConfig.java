@@ -1,12 +1,13 @@
 package com.example.harpalsingh.fabgallery.interfaces;
 
 public interface KeyConfig {
-    String api_key = "b3b9dae4c7585158b2753adb7268643c";
+    String api_key = "7d5d68ca73019591c87cb5e7dbe2bc31";
     String secret_key = "3f205a38db47bc77";
     String format = "json";
-    String method = "flickr.photos.search";
-    String auth_token = "72157696432638430-a5c671627a282aa4";
-    String api_sig = "748051e95c570c83e4250043c3d08e17";
+    String searchMethod = "flickr.photos.search";
+    String sizehMethod = "flickr.photos.getSizes";
+    String auth_token = "72157700750134571-0f3d98dffe11c31c";
+    String api_sig = "fde41987a5ea18c7525678185aceafb1";
     int nojsoncallback = 1;
     String noInternetConnectionMessage = "No Internet Connection Please Try Again!";
     String networkCallFailMessage = "Something went wrong please try again";

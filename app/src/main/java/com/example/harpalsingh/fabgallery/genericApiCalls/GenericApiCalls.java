@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.harpalsingh.fabgallery.APILayer.RetrofitServices;
 import com.example.harpalsingh.fabgallery.genericEventBus.GenericEventBus;
@@ -13,6 +12,7 @@ import com.example.harpalsingh.fabgallery.models.PhotoData;
 import com.example.harpalsingh.fabgallery.utilities.Utilities;
 
 import org.greenrobot.eventbus.EventBus;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,9 +28,8 @@ public class GenericApiCalls {
             @Override
             public void onResponse(@NonNull Call<PhotoData> call, @NonNull Response<PhotoData> response) {
                 if (response.code() == 200 & response.body().getPhotos() !=null) {
-
-                    Toast.makeText(context,""+response.body(),Toast.LENGTH_LONG).show();
-                    EventBus.getDefault().post(new GenericEventBus(PHOTO_DATA));
+                    PHOTO_DATA = response.body();
+                     EventBus.getDefault().post(new GenericEventBus(PHOTO_DATA));
                 } else {
                     Utilities.showSnackBar(KeyConfig.networkCallFailMessage, snackBarParentView);
                 }

@@ -57,4 +57,7 @@ dependencies {
 
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
+
+    implementation 'com.github.scribejava:scribejava-apis:6.0.0'
+    implementation group: 'com.github.scribejava', name: 'scribejava-core', version: '6.0.0'
 }
