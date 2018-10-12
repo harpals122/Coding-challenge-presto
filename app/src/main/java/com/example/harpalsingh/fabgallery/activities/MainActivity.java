@@ -27,6 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity   {
+    @BindView(R.id.app_drawer_layout)
     DrawerLayout drawerLayout;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity   {
 
         networkBroadcast = new NetworkStateChangeReceiver(parentView);
 
-        Utilities.setupToolbarAndNavigationBar(this, toolbar, navigationView, drawerLayout);
+        Utilities.setupToolbarAndNavigationBar(this, toolbar, navigationView, drawerLayout,getApplicationContext());
 
         setupRecyclerView();
     }
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity   {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
         recyclerView.setClipToPadding(false);
-        GridViewAdapter gridAdapter = new GridViewAdapter(this, AllData.getInstance().getPhotoData());
+        GridViewAdapter gridAdapter = new GridViewAdapter(this, AllData.getInstance().getPhotoData(),mainContentLayout);
         recyclerView.setAdapter(gridAdapter);
     }
 

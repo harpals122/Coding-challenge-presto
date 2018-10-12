@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -16,7 +17,10 @@ import com.example.harpalsingh.fabgallery.R;
 import com.example.harpalsingh.fabgallery.models.ImageSizeData;
 import com.example.harpalsingh.fabgallery.models.Photo;
 import com.example.harpalsingh.fabgallery.models.Photos;
+import com.example.harpalsingh.fabgallery.utilities.Utilities;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,11 +31,14 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.GridVi
     private final Photos data;
     private final RequestManager glide;
     private final Context context;
+    private RelativeLayout mainContentLayout;
 
-    public GridViewAdapter(Context context, Photos photoData) {
+
+    public GridViewAdapter(Context context, Photos photoData, RelativeLayout mainContentLayout) {
         this.data = photoData;
         glide = Glide.with(context);
         this.context = context;
+        this.mainContentLayout = mainContentLayout;
     }
 
     @NonNull
@@ -58,17 +65,18 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.GridVi
     }
 
     class GridViewHolder extends RecyclerView.ViewHolder {
-        final ImageView image;
-        final TextView title;
-        final TextView size;
-        final TextView dimensions;
+        @BindView(R.id.image)
+        ImageView image;
+        @BindView(R.id.title)
+        TextView title;
+        @BindView(R.id.size)
+        TextView size;
+        @BindView(R.id.image_dimensions)
+        TextView image_dimensions;
 
         GridViewHolder(View itemView) {
             super(itemView);
-            image = itemView.findViewById(R.id.image);
-            title = itemView.findViewById(R.id.title);
-            size = itemView.findViewById(R.id.size);
-            dimensions = itemView.findViewById(R.id.image_dimensions);
+            ButterKnife.bind(this, itemView);
         }
 
         void bindImageData(final int position) {
@@ -105,17 +113,17 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.GridVi
                         }
 
                         size.setText(sizeString.toString());
-                        dimensions.setText(dimensionString.toString());
+                        image_dimensions.setText(dimensionString.toString());
 
                     } else {
-                        size.setText(R.string.noSizeInformation);
-                        dimensions.setText(R.string.noSizeDimension);
+                        size.setText(R.string.errorSizeInformation);
+                        image_dimensions.setText(R.string.errorSizeDimension);
                     }
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<ImageSizeData> call, @NonNull Throwable t) {
-
+                    Utilities.showSnackBar("Failed to load image size and dimensions. Please try again", mainContentLayout);
                 }
             });
         }

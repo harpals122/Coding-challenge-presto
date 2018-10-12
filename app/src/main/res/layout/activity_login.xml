@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/loginLinearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -13,39 +14,47 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_margin="10dp"
             android:layout_weight="1.3"
-            android:orientation="vertical"
-            android:weightSum="2"
-            android:layout_margin="10dp">
+
+            android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/logo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/splash"
-                android:id="@+id/logo"/>
+                android:src="@drawable/splash" />
 
             <WebView
                 android:id="@+id/simpleWebView"
                 android:layout_width="match_parent"
-              android:layout_height="match_parent"
+                android:layout_height="match_parent"
                 android:visibility="gone" />
+
+            <ProgressBar
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:foregroundGravity="center"
+                android:visibility="gone"
+                android:id="@+id/webViewLoadingProgressBar"/>
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/login_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:weightSum="0.7"
-            android:id="@+id/login_layout">
+            android:weightSum="0.7">
 
             <TextView
                 android:id="@+id/url"
-                android:layout_marginTop="10dp"
+                style="@style/Header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
-                style="@style/Header"
                 android:text="@string/lable"
                 android:textSize="20sp" />
 
@@ -55,55 +64,64 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="30dp"
-                android:gravity="center"
                 android:background="#198FFF"
-                android:textColor="@color/white"
+                android:gravity="center"
                 android:text="@string/yahoo_login"
-
+                android:textColor="@color/white"
                 android:textSize="20sp" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/continue_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:weightSum="0.7"
             android:padding="10dp"
             android:visibility="gone"
-            android:id="@+id/continue_layout">
+            android:weightSum="0.7">
 
             <TextView
-                android:layout_marginTop="5dp"
+                style="@style/Header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:gravity="center"
+                android:text="@string/lableThree"
+                android:textSize="24sp" />
+
+            <TextView
                 style="@style/Header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
                 android:text="@string/lableTwo"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
 
             <EditText
-                android:layout_marginTop="10dp"
+                android:id="@+id/auth_code"
+                style="@style/Header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Header"
+                android:layout_marginTop="5dp"
+                android:hint="Enter code"
                 android:inputType="number"
                 android:maxLength="9"
-                android:id="@+id/auth_code"
-                android:hint="Enter code"
                 android:maxLines="1"
-                android:textSize="20sp" />
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:gravity="center"
+                android:layout_margin="5dp"
                 android:background="#198FFF"
-                android:textColor="@color/white"
+                android:gravity="center"
                 android:text="@string/login"
-                />
+                android:textColor="@color/white" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

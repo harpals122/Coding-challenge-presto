@@ -1,6 +1,8 @@
 package com.example.harpalsingh.fabgallery.activities;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.example.harpalsingh.fabgallery.R;
 import com.example.harpalsingh.fabgallery.interfaces.KeyConfig;
@@ -37,10 +40,15 @@ public class LoginActivity extends AppCompatActivity {
     LinearLayout loginLinearLayout;
     @BindView(R.id.continue_layout)
     LinearLayout conitnueLinearLayout;
+    @BindView(R.id.loginLinearLayout)
+    LinearLayout getLoginLinearLayout;
 
     private OAuth1RequestToken requestToken;
     private String authorizationUrl;
     private OAuth10aService service;
+
+    @BindView(R.id.webViewLoadingProgressBar)
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +63,33 @@ public class LoginActivity extends AppCompatActivity {
 
     @SuppressLint("SetJavaScriptEnabled")
     private void setupWebView() {
-        webView.setWebViewClient(new MyBrowser());
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setAllowContentAccess(true);
         settings.setDomStorageEnabled(true);
-        webView.setWebViewClient(new WebViewClient());
+        progressBar.setVisibility(View.VISIBLE);
+
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                WebSettings settings = view.getSettings();
+                settings.setJavaScriptEnabled(true);
+                settings.setAllowContentAccess(true);
+                settings.setDomStorageEnabled(true);
+                view.loadUrl(url);
+                return true;
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+              progressBar.setVisibility(View.GONE);
+              view.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+            }
+        });
     }
 
     private void getAuthToken() {
@@ -94,33 +123,19 @@ public class LoginActivity extends AppCompatActivity {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                makeNetworkCall(LoginActivity.this, editText, service, requestToken, MainActivity.class);
+                makeNetworkCall(LoginActivity.this, editText, service, requestToken, MainActivity.class, getLoginLinearLayout);
             }
         });
 
         thread.start();
-
     }
 
     private void continueLogin() {
         imageView.setVisibility(View.GONE);
-        webView.setVisibility(View.VISIBLE);
         webView.loadUrl(authorizationUrl);
+        webView.setVisibility(View.GONE);
         loginLinearLayout.setVisibility(View.GONE);
         conitnueLinearLayout.setVisibility(View.VISIBLE);
-    }
-
-    private class MyBrowser extends WebViewClient {
-        @SuppressLint("SetJavaScriptEnabled")
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            WebSettings settings = view.getSettings();
-            settings.setJavaScriptEnabled(true);
-            settings.setAllowContentAccess(true);
-            settings.setDomStorageEnabled(true);
-            view.loadUrl(url);
-            return true;
-        }
     }
 }
 

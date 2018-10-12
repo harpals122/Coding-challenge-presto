@@ -6,13 +6,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.graphics.Color;
+import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.harpalsingh.fabgallery.R;
@@ -33,6 +41,7 @@ import com.google.gson.Gson;
 import org.json.JSONObject;
 
 import java.security.Key;
+import java.util.List;
 import java.util.Objects;
 
 public class Utilities {
@@ -40,7 +49,7 @@ public class Utilities {
     private static final String PREFS_NAME = "FabGalleryPreferences";
     private static final String FLICKR_URL = Constants.ROOT_URL+Constants.SEARCH_PHOTO;
 
-    public static void setupToolbarAndNavigationBar(final MainActivity mainActivity, Toolbar toolbar, NavigationView navigationView, final DrawerLayout drawerLayout) {
+    public static void setupToolbarAndNavigationBar(final MainActivity mainActivity, Toolbar toolbar, NavigationView navigationView, final DrawerLayout drawerLayout, final Context context) {
         mainActivity.setSupportActionBar(toolbar);
         ActionBar actionbar = mainActivity.getSupportActionBar();
         Objects.requireNonNull(actionbar).setDisplayHomeAsUpEnabled(true);
@@ -49,12 +58,56 @@ public class Utilities {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                menuItem.setChecked(true);
+                Intent intent;
+
+                switch(menuItem.getItemId()){
+                    case R.id.call:
+                        String phone = "+1 905-867-6640";
+                        intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null));
+                        context.startActivity(intent);
+
+                        break;
+
+                    case R.id.linkedIn:
+                         intent = new Intent(Intent.ACTION_VIEW, Uri.parse("linkedin://you"));
+                        final PackageManager packageManager = mainActivity.getPackageManager();
+                        final List<ResolveInfo> list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+                        if (list.isEmpty()) {
+                            intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.linkedin.com/in/harpal-singh-a05271ab/"));
+                        }
+                        context.startActivity(intent);
+                        break;
+                    case R.id.email:
+                        intent  = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                                "mailto","harpals122@gmail.com", null));
+                        intent.putExtra(Intent.EXTRA_SUBJECT, "Fab Gallery Customer Support");
+                        intent.putExtra(Intent.EXTRA_TEXT, "");
+                        context.startActivity(Intent.createChooser(intent, "Send email..."));
+                        break;
+
+                }
                 drawerLayout.closeDrawers();
                 return true;
             }
         });
     }
+
+    public static void showSnackBar(@Nullable String message, View snackBarParentView) {
+
+        String messageString = message;
+        if(messageString!=null)
+            messageString = message;
+        else
+            messageString = "Something went wrong";
+
+        Snackbar snackbar = Snackbar.make(snackBarParentView, messageString, Snackbar.LENGTH_INDEFINITE).setAction("dismiss", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        }).setActionTextColor(Color.YELLOW);
+        snackbar.show();
+    }
+
 
     public static void registerNetworkStateChangerReciever(MainActivity mainActivity, BroadcastReceiver networkBroadcast) {
         IntentFilter filter = new IntentFilter();
@@ -88,7 +141,7 @@ public class Utilities {
         }
     }
 
-    public static void makeNetworkCall(final Context applicationContext, EditText editText, OAuth10aService service, OAuth1RequestToken requestToken, Class targetClass) {
+    public static void makeNetworkCall(final Context applicationContext, EditText editText, OAuth10aService service, OAuth1RequestToken requestToken, Class targetClass, final View snackBarParentView) {
         Activity activity = (Activity) applicationContext;
         JSONObject jsonObject;
         String oauthVerifier;
@@ -102,6 +155,9 @@ public class Utilities {
             request.addQuerystringParameter("nojsoncallback", KeyConfig.NOJSONCALLBACK);
             request.addQuerystringParameter("per_page", KeyConfig.PER_PAGE);
             request.addQuerystringParameter("min_taken_date", KeyConfig.MIN_DATE_TAKEN);
+            request.addQuerystringParameter("privacy_filter", KeyConfig.PRIVACY_FILTER);
+
+
 
 
             service.signRequest(accessToken, request);
@@ -122,7 +178,7 @@ public class Utilities {
         } catch (Exception e) {
             activity.runOnUiThread(new Runnable() {
                 public void run() {
-                    Toast.makeText(applicationContext, "Invalid Code (Something else ?? let us help you contact at harpals122@gmail.com)", Toast.LENGTH_SHORT).show();
+                    showSnackBar("Invalid Code. If problem persists contact us)", snackBarParentView);
                 }
             });
         }

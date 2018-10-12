@@ -25,10 +25,11 @@
     <string name="search">Search</string>
     <string name="login">Login</string>
     <string name="lable">Login To proceed</string>
-    <string name="lableTwo"> Login And Enter 9 Digit Code Bellow</string>
+    <string name="lableTwo"> 1. Login 2. Give Authorization \n 3. Get Nine Digit Code 4. Enter Below</string>
     <string name="yahoo_login">Yahoo Login</string>
-    <string name="noSizeInformation">Size : No Information Available</string>
-    <string name="noSizeDimension">Dimension: No Information Available</string>
+    <string name="errorSizeInformation">Size : Error Loading information</string>
+    <string name="errorSizeDimension">Dimension: Error Loading information</string>
     <string name="noTitle">Title : No Information Available</string>
     <string name="titleLable">Title :</string>
+    <string name="lableThree">Steps</string>
 </resources>

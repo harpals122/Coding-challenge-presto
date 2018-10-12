@@ -23,6 +23,5 @@ public class RetrofitServices {
     public Call<ImageSizeData>getImageSizeData(String photoId) {
         return RetrofitAPIClient.APIClient().create(PhotosInterface.class).getImageSizeData(KeyConfig.FLICKR_PHOTOS_GET_SIZES,
                 KeyConfig.API_KEY,photoId, KeyConfig.FORMAT, KeyConfig.NOJSONCALLBACK);
-
     }
 }

@@ -13,5 +13,5 @@ public interface KeyConfig {
     String MOBILE_DATA_ENABLED = "Mobile data enabled";
     String PER_PAGE = "700";
     String MIN_DATE_TAKEN = "2010";
-
+    String PRIVACY_FILTER = "safe";
 }
