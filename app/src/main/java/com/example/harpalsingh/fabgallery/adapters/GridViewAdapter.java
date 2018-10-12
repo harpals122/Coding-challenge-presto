@@ -1,10 +1,7 @@
 package com.example.harpalsingh.fabgallery.adapters;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintSet;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,14 +11,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.example.harpalsingh.fabgallery.APILayer.RetrofitServices;
 import com.example.harpalsingh.fabgallery.R;
 import com.example.harpalsingh.fabgallery.models.ImageSizeData;
 import com.example.harpalsingh.fabgallery.models.Photos;
+
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,11 +25,9 @@ import retrofit2.Response;
 
 public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.GridViewHolder> {
 
-    private final ConstraintSet constraintSet = new ConstraintSet();
     private final Photos data;
-    private final int visibleThreshold = 6;
     private final RequestManager glide;
-    Context context;
+    private final Context context;
 
     public GridViewAdapter(Context context, Photos photoData) {
         this.data = photoData;
@@ -59,22 +52,20 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.GridVi
             @Override
             public void onResponse(@NonNull Call<ImageSizeData> call, @NonNull Response<ImageSizeData> response) {
 
-                if (response.body() != null && response.body().getStat().equals("ok") && response.body().getSizes().getSize().size() > 0) {
+                if (response.body() != null && Objects.requireNonNull(response.body()).getStat().equals("ok") && Objects.requireNonNull(response.body()).getSizes().getSize().size() > 0) {
 
-                    String size = "";
-                    String dimensions = "";
-                    for (int i = 0; i <= response.body().getSizes().getSize().size() - 1; i++) {
-                        size = size + "Size :" + response.body().getSizes().getSize().get(i).getLabel() + "\n";
-                        dimensions = dimensions + "Dimensions :" + response.body().getSizes().getSize().get(i).getHeight()
-                                + " * " + response.body().getSizes().getSize().get(i).getWidth() + " px\n";
+                    StringBuilder size = new StringBuilder();
+                    StringBuilder dimensions = new StringBuilder();
+                    for (int i = 0; i <= Objects.requireNonNull(response.body()).getSizes().getSize().size() - 1; i++) {
+                        size.append("Size :").append(Objects.requireNonNull(response.body()).getSizes().getSize().get(i).getLabel()).append("\n");
+                        dimensions.append("Dimensions :").append(Objects.requireNonNull(response.body()).getSizes().getSize().get(i).getHeight()).append(" * ").
+                                append(Objects.requireNonNull(response.body()).getSizes().getSize().get(i).getWidth()).append(" px\n");
                     }
-                    holder.size.setText(size);
-                    holder.dimensions.setText(dimensions);
+                    holder.size.setText(size.toString());
+                    holder.dimensions.setText(dimensions.toString());
                 } else {
-
-                    holder.size.setText("Size: No Information Available");
-                    holder.dimensions.setText("Dimension: No Information Available");
-
+                    holder.size.setText(R.string.noSizeInformation);
+                    holder.dimensions.setText(R.string.noSizeDimension);
                 }
             }
 
@@ -96,13 +87,11 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.GridVi
         return position;
     }
 
-
     class GridViewHolder extends RecyclerView.ViewHolder {
         final ImageView image;
         final TextView title;
         final TextView size;
         final TextView dimensions;
-
 
         GridViewHolder(View itemView) {
             super(itemView);
@@ -113,27 +102,16 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.GridVi
         }
 
         private void bindData(final int position) {
-
             if (data.getPhoto().get(position).getTitle().equals(""))
-                title.setText("Title : No Information Available");
+                title.setText(R.string.noTitle);
             else {
-                title.setText("Title : " + data.getPhoto().get(position).getTitle());
+                String titleString = R.string.titleLable + data.getPhoto().get(position).getTitle();
+                title.setText(titleString);
             }
 
             glide.load("http://farm2.staticflickr.com/" + data.getPhoto().get(position).getServer() + "/" +
                     data.getPhoto().get(position).getId() + "_" + data.getPhoto().get(position).getSecret() + ".jpg").
-                    thumbnail(Glide.with(context).load(R.drawable.image_placeholder)).
-                    listener(new RequestListener<Drawable>() {
-                        @Override
-                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                            return false;
-                        }
-
-                        @Override
-                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                            return false;
-                        }
-                    }).into(image);
+                    thumbnail(Glide.with(context).load(R.drawable.image_placeholder)).into(image);
         }
     }
 }

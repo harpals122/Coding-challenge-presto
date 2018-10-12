@@ -27,4 +27,8 @@
     <string name="lable">Login To proceed</string>
     <string name="lableTwo"> Login And Enter 9 Digit Code Bellow</string>
     <string name="yahoo_login">Yahoo Login</string>
+    <string name="noSizeInformation">Size : No Information Available</string>
+    <string name="noSizeDimension">Dimension: No Information Available</string>
+    <string name="noTitle">Title : No Information Available</string>
+    <string name="titleLable">Title :</string>
 </resources>

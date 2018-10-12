@@ -25,11 +25,6 @@ public class RetrofitServices {
         return SERVICE_INSTANCE;
     }
 
-    public Call<PhotoData> getPhotos() {
-        return RetrofitAPIClient.APIClient().create(PhotosInterface.class).getPhotos(KeyConfig.searchMethod,
-                KeyConfig.api_key, KeyConfig.format, KeyConfig.nojsoncallback, KeyConfig.auth_token, KeyConfig.api_sig);
-    }
-
     public Call<ImageSizeData>getImageSizeData(String photoId) {
         return RetrofitAPIClient.APIClient().create(PhotosInterface.class).getImageSizeData(KeyConfig.sizehMethod,
                 KeyConfig.api_key_get_size,photoId, KeyConfig.format, KeyConfig.nojsoncallback);

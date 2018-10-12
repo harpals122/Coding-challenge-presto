@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,21 +20,13 @@ import android.widget.RelativeLayout;
 import com.example.harpalsingh.fabgallery.R;
 import com.example.harpalsingh.fabgallery.adapters.GridViewAdapter;
 import com.example.harpalsingh.fabgallery.models.AllData;
-import com.example.harpalsingh.fabgallery.models.Photos;
 import com.example.harpalsingh.fabgallery.utilities.NetworkStateChangeReceiver;
 import com.example.harpalsingh.fabgallery.utilities.Utilities;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity   {
-
-    @BindView(R.id.app_drawer_layout)
     DrawerLayout drawerLayout;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -54,11 +45,9 @@ public class MainActivity extends AppCompatActivity   {
     @BindView(R.id.retry)
     Button retry;
     private BroadcastReceiver networkBroadcast;
-    private GridViewAdapter gridAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
@@ -72,12 +61,11 @@ public class MainActivity extends AppCompatActivity   {
 
     private void setupRecyclerView() {
         final LinearLayoutManager linearLayout = new LinearLayoutManager(getApplicationContext());
-      
         recyclerView.setLayoutManager(linearLayout);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
         recyclerView.setClipToPadding(false);
-        gridAdapter = new GridViewAdapter(this, AllData.getInstance().getPhotoData());
+        GridViewAdapter gridAdapter = new GridViewAdapter(this, AllData.getInstance().getPhotoData());
         recyclerView.setAdapter(gridAdapter);
     }
 
@@ -107,5 +95,4 @@ public class MainActivity extends AppCompatActivity   {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }
