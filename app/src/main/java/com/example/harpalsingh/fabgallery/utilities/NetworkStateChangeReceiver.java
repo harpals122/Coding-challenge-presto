@@ -42,7 +42,7 @@ public class NetworkStateChangeReceiver extends BroadcastReceiver {
     }
 
     private void setupSnackBar() {
-        SNACKBAR = Snackbar.make(parentView, KeyConfig.noInternetConnectionMessage, Snackbar.LENGTH_INDEFINITE)
+        SNACKBAR = Snackbar.make(parentView, KeyConfig.NO_INTERNET_CONNECTION_PLEASE_TRY_AGAIN, Snackbar.LENGTH_INDEFINITE)
                 .setAction("Dismiss", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

@@ -32,13 +32,13 @@ class NetworkUtilityClass {
         String status = null;
         switch (connectivityStatus) {
             case NetworkUtilityClass.TYPE_WIFI:
-                status = KeyConfig.wifiEnabled;
+                status = KeyConfig.WIFI_ENABLED;
                 break;
             case NetworkUtilityClass.TYPE_MOBILE:
-                status = KeyConfig.mobileDataEnabled;
+                status = KeyConfig.MOBILE_DATA_ENABLED;
                 break;
             case NetworkUtilityClass.TYPE_NOT_CONNECTED:
-                status = KeyConfig.noConnection;
+                status = KeyConfig.NO_CONNECTION;
                 break;
         }
         return status;

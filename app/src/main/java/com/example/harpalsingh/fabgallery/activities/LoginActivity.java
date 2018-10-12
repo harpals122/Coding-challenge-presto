@@ -1,8 +1,8 @@
 package com.example.harpalsingh.fabgallery.activities;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -12,9 +12,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.harpalsingh.fabgallery.R;
+import com.example.harpalsingh.fabgallery.interfaces.KeyConfig;
 import com.github.scribejava.apis.FlickrApi;
 import com.github.scribejava.core.builder.ServiceBuilder;
-import com.github.scribejava.core.model.OAuth1AccessToken;
 import com.github.scribejava.core.model.OAuth1RequestToken;
 import com.github.scribejava.core.oauth.OAuth10aService;
 
@@ -41,8 +41,6 @@ public class LoginActivity extends AppCompatActivity {
     private OAuth1RequestToken requestToken;
     private String authorizationUrl;
     private OAuth10aService service;
-    private final OAuth1AccessToken accessToken = null;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         getAuthToken();
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void setupWebView() {
         webView.setWebViewClient(new MyBrowser());
         WebSettings settings = webView.getSettings();
@@ -69,8 +68,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    final String apiKey = "7486602c1ebc89c43070445b4efa85b5";
-                    final String apiSecret = "a3f437985c1305ba";
+                    final String apiKey = KeyConfig.API_KEY;
+                    final String apiSecret = KeyConfig.API_SECRET;
                     service = new ServiceBuilder(apiKey)
                             .apiSecret(apiSecret)
                             .build(FlickrApi.instance(FlickrApi.FlickrPerm.DELETE));
@@ -112,6 +111,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private class MyBrowser extends WebViewClient {
+        @SuppressLint("SetJavaScriptEnabled")
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             WebSettings settings = view.getSettings();

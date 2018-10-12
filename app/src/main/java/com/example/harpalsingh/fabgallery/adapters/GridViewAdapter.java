@@ -14,9 +14,8 @@ import com.bumptech.glide.RequestManager;
 import com.example.harpalsingh.fabgallery.APILayer.RetrofitServices;
 import com.example.harpalsingh.fabgallery.R;
 import com.example.harpalsingh.fabgallery.models.ImageSizeData;
+import com.example.harpalsingh.fabgallery.models.Photo;
 import com.example.harpalsingh.fabgallery.models.Photos;
-
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,37 +43,8 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.GridVi
 
     @Override
     public void onBindViewHolder(@NonNull final GridViewHolder holder, final int position) {
-        holder.bindData(position);
-
-        String photoId = data.getPhoto().get(position).getId();
-        Call<ImageSizeData> callPlaces = RetrofitServices.getNYServiceInstance().getImageSizeData(photoId);
-        callPlaces.enqueue(new Callback<ImageSizeData>() {
-            @Override
-            public void onResponse(@NonNull Call<ImageSizeData> call, @NonNull Response<ImageSizeData> response) {
-
-                if (response.body() != null && Objects.requireNonNull(response.body()).getStat().equals("ok") && Objects.requireNonNull(response.body()).getSizes().getSize().size() > 0) {
-
-                    StringBuilder size = new StringBuilder();
-                    StringBuilder dimensions = new StringBuilder();
-                    for (int i = 0; i <= Objects.requireNonNull(response.body()).getSizes().getSize().size() - 1; i++) {
-                        size.append("Size :").append(Objects.requireNonNull(response.body()).getSizes().getSize().get(i).getLabel()).append("\n");
-                        dimensions.append("Dimensions :").append(Objects.requireNonNull(response.body()).getSizes().getSize().get(i).getHeight()).append(" * ").
-                                append(Objects.requireNonNull(response.body()).getSizes().getSize().get(i).getWidth()).append(" px\n");
-                    }
-                    holder.size.setText(size.toString());
-                    holder.dimensions.setText(dimensions.toString());
-                } else {
-                    holder.size.setText(R.string.noSizeInformation);
-                    holder.dimensions.setText(R.string.noSizeDimension);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ImageSizeData> call, @NonNull Throwable t) {
-
-            }
-        });
-
+        holder.bindImageData(position);
+        holder.bindImageSizeData(position);
     }
 
     @Override
@@ -101,17 +71,53 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.GridVi
             dimensions = itemView.findViewById(R.id.image_dimensions);
         }
 
-        private void bindData(final int position) {
-            if (data.getPhoto().get(position).getTitle().equals(""))
+        void bindImageData(final int position) {
+            Photo photo = data.getPhoto().get(position);
+
+            if (photo.getTitle().equals(""))
                 title.setText(R.string.noTitle);
             else {
-                String titleString = R.string.titleLable + data.getPhoto().get(position).getTitle();
+                String titleString = "Title: " + photo.getTitle();
                 title.setText(titleString);
             }
 
-            glide.load("http://farm2.staticflickr.com/" + data.getPhoto().get(position).getServer() + "/" +
-                    data.getPhoto().get(position).getId() + "_" + data.getPhoto().get(position).getSecret() + ".jpg").
+            glide.load("http://farm2.staticflickr.com/" + photo.getServer() + "/" +
+                    photo.getId() + "_" + photo.getSecret() + ".jpg").
                     thumbnail(Glide.with(context).load(R.drawable.image_placeholder)).into(image);
+        }
+
+        void bindImageSizeData(int position) {
+            String photoId = data.getPhoto().get(position).getId();
+            Call<ImageSizeData> callPlaces = RetrofitServices.getNYServiceInstance().getImageSizeData(photoId);
+            callPlaces.enqueue(new Callback<ImageSizeData>() {
+                @Override
+                public void onResponse(@NonNull Call<ImageSizeData> call, @NonNull Response<ImageSizeData> response) {
+                    ImageSizeData imageSizeData = response.body();
+
+                    if (imageSizeData != null && imageSizeData.getStat().equals("ok") && imageSizeData.getSizes().getSize().size() > 0) {
+                        StringBuilder sizeString = new StringBuilder();
+                        StringBuilder dimensionString = new StringBuilder();
+
+                        for (int i = 0; i <= imageSizeData.getSizes().getSize().size() - 1; i++) {
+                            sizeString.append("Size :").append(imageSizeData.getSizes().getSize().get(i).getLabel()).append("\n");
+                            dimensionString.append("Dimensions :").append(imageSizeData.getSizes().getSize().get(i).getHeight()).append(" * ").
+                                    append(imageSizeData.getSizes().getSize().get(i).getWidth()).append(" px\n");
+                        }
+
+                        size.setText(sizeString.toString());
+                        dimensions.setText(dimensionString.toString());
+
+                    } else {
+                        size.setText(R.string.noSizeInformation);
+                        dimensions.setText(R.string.noSizeDimension);
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<ImageSizeData> call, @NonNull Throwable t) {
+
+                }
+            });
         }
     }
 }

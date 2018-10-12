@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import com.example.harpalsingh.fabgallery.R;
 import com.example.harpalsingh.fabgallery.activities.MainActivity;
+import com.example.harpalsingh.fabgallery.constants.Constants;
+import com.example.harpalsingh.fabgallery.interfaces.KeyConfig;
 import com.example.harpalsingh.fabgallery.models.AllData;
 import com.example.harpalsingh.fabgallery.models.PhotoData;
 import com.example.harpalsingh.fabgallery.models.Photos;
@@ -30,12 +32,13 @@ import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import java.security.Key;
 import java.util.Objects;
 
 public class Utilities {
 
     private static final String PREFS_NAME = "FabGalleryPreferences";
-    private static final String PROTECTED_RESOURCE_URL = "https://api.flickr.com/services/rest/";
+    private static final String FLICKR_URL = Constants.ROOT_URL+Constants.SEARCH_PHOTO;
 
     public static void setupToolbarAndNavigationBar(final MainActivity mainActivity, Toolbar toolbar, NavigationView navigationView, final DrawerLayout drawerLayout) {
         mainActivity.setSupportActionBar(toolbar);
@@ -85,20 +88,20 @@ public class Utilities {
         }
     }
 
-    public static void makeNetworkCall(Context applicationContext, EditText editText, OAuth10aService service, OAuth1RequestToken requestToken, Class targetClass) {
+    public static void makeNetworkCall(final Context applicationContext, EditText editText, OAuth10aService service, OAuth1RequestToken requestToken, Class targetClass) {
+        Activity activity = (Activity) applicationContext;
         JSONObject jsonObject;
         String oauthVerifier;
         oauthVerifier = String.valueOf(editText.getText());
 
         try {
             OAuth1AccessToken accessToken = service.getAccessToken(requestToken, oauthVerifier);
-            final OAuthRequest request = new OAuthRequest(Verb.GET, PROTECTED_RESOURCE_URL);
-            request.addQuerystringParameter("method", "flickr.photos.search");
-            request.addQuerystringParameter("format", "json");
-            request.addQuerystringParameter("nojsoncallback", "1");
-            request.addQuerystringParameter("per_page", "500");
-            request.addQuerystringParameter("min_taken_date", "2008");
-            request.addQuerystringParameter("max_taken_date", "2017");
+            final OAuthRequest request = new OAuthRequest(Verb.GET, FLICKR_URL);
+            request.addQuerystringParameter("method", KeyConfig.FLICKR_PHOTOS_SEARCH);
+            request.addQuerystringParameter("format", KeyConfig.FORMAT);
+            request.addQuerystringParameter("nojsoncallback", KeyConfig.NOJSONCALLBACK);
+            request.addQuerystringParameter("per_page", KeyConfig.PER_PAGE);
+            request.addQuerystringParameter("min_taken_date", KeyConfig.MIN_DATE_TAKEN);
 
 
             service.signRequest(accessToken, request);
@@ -113,11 +116,15 @@ public class Utilities {
             PhotoData photoData = gson.fromJson(jsonObject.toString(), PhotoData.class);
             Photos photos = photoData.getPhotos();
             AllData.getInstance().setPhotoData(photos);
-            Activity activity = (Activity) applicationContext;
+
             activity.startActivity(new Intent(activity, targetClass));
             activity.finish();
         } catch (Exception e) {
-            Toast.makeText(applicationContext, e.getMessage()+"Something went wrong.Try Again", Toast.LENGTH_LONG).show();
+            activity.runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast.makeText(applicationContext, "Invalid Code (Something else ?? let us help you contact at harpals122@gmail.com)", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 }

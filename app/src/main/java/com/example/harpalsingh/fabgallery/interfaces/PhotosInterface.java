@@ -15,6 +15,6 @@ public interface PhotosInterface {
                                          @Query("api_key") String api_key,
                                          @Query("photo_id") String photo_id,
                                          @Query("format") String format,
-                                         @Query("nojsoncallback") int nojsoncallback);
+                                         @Query("nojsoncallback") String nojsoncallback);
 }
 

@@ -1,13 +1,8 @@
 package com.example.harpalsingh.fabgallery.APILayer;
 
-import android.os.StrictMode;
-
 import com.example.harpalsingh.fabgallery.interfaces.KeyConfig;
 import com.example.harpalsingh.fabgallery.interfaces.PhotosInterface;
 import com.example.harpalsingh.fabgallery.models.ImageSizeData;
-import com.example.harpalsingh.fabgallery.models.PhotoData;
-
-import java.security.Key;
 
 import retrofit2.Call;
 
@@ -26,8 +21,8 @@ public class RetrofitServices {
     }
 
     public Call<ImageSizeData>getImageSizeData(String photoId) {
-        return RetrofitAPIClient.APIClient().create(PhotosInterface.class).getImageSizeData(KeyConfig.sizehMethod,
-                KeyConfig.api_key_get_size,photoId, KeyConfig.format, KeyConfig.nojsoncallback);
+        return RetrofitAPIClient.APIClient().create(PhotosInterface.class).getImageSizeData(KeyConfig.FLICKR_PHOTOS_GET_SIZES,
+                KeyConfig.API_KEY,photoId, KeyConfig.FORMAT, KeyConfig.NOJSONCALLBACK);
 
     }
 }

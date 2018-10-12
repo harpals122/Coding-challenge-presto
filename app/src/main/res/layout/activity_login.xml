@@ -87,8 +87,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/Header"
+                android:inputType="number"
+                android:maxLength="9"
                 android:id="@+id/auth_code"
                 android:hint="Enter code"
+                android:maxLines="1"
                 android:textSize="20sp" />
 
             <Button

@@ -40,10 +40,6 @@ public class MainActivity extends AppCompatActivity   {
     View parentView;
     @BindView(R.id.main_content_container)
     RelativeLayout mainContentLayout;
-    @BindView(R.id.retry_parent_view)
-    LinearLayout errorLayout;
-    @BindView(R.id.retry)
-    Button retry;
     private BroadcastReceiver networkBroadcast;
 
     @Override
@@ -73,11 +69,6 @@ public class MainActivity extends AppCompatActivity   {
     public void onStart() {
         super.onStart();
         Utilities.registerNetworkStateChangerReciever(this, networkBroadcast);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
     }
 
     @Override
