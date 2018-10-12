@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
@@ -22,16 +20,8 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.harpalsingh.fabgallery.APILayer.RetrofitServices;
 import com.example.harpalsingh.fabgallery.R;
-import com.example.harpalsingh.fabgallery.genericEventBus.GenericEventBus;
-import com.example.harpalsingh.fabgallery.interfaces.KeyConfig;
 import com.example.harpalsingh.fabgallery.models.ImageSizeData;
-import com.example.harpalsingh.fabgallery.models.PhotoData;
 import com.example.harpalsingh.fabgallery.models.Photos;
-import com.example.harpalsingh.fabgallery.utilities.Utilities;
-
-import org.greenrobot.eventbus.EventBus;
-
-import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -63,19 +53,29 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.GridVi
     public void onBindViewHolder(@NonNull final GridViewHolder holder, final int position) {
         holder.bindData(position);
 
-        Call<ImageSizeData> callPlaces = RetrofitServices.getNYServiceInstance().getImageSizeData();
+        String photoId = data.getPhoto().get(position).getId();
+        Call<ImageSizeData> callPlaces = RetrofitServices.getNYServiceInstance().getImageSizeData(photoId);
         callPlaces.enqueue(new Callback<ImageSizeData>() {
             @Override
             public void onResponse(@NonNull Call<ImageSizeData> call, @NonNull Response<ImageSizeData> response) {
-              String size = "";
-              String dimensions = "";
-               for (int i = 0 ;i<= response.body().getSizes().getSize().size()-1;i++) {
-                  size  = size + "Size :"+ response.body().getSizes().getSize().get(i).getLabel()+"\n";
-                   dimensions= dimensions+ "Dimensions :" + response.body().getSizes().getSize().get(i).getHeight()
-                           + " * " + response.body().getSizes().getSize().get(i).getWidth()+" px\n";
-               }
-                holder.size.setText(size);
-                holder.dimensions.setText(dimensions);
+
+                if (response.body() != null && response.body().getStat().equals("ok") && response.body().getSizes().getSize().size() > 0) {
+
+                    String size = "";
+                    String dimensions = "";
+                    for (int i = 0; i <= response.body().getSizes().getSize().size() - 1; i++) {
+                        size = size + "Size :" + response.body().getSizes().getSize().get(i).getLabel() + "\n";
+                        dimensions = dimensions + "Dimensions :" + response.body().getSizes().getSize().get(i).getHeight()
+                                + " * " + response.body().getSizes().getSize().get(i).getWidth() + " px\n";
+                    }
+                    holder.size.setText(size);
+                    holder.dimensions.setText(dimensions);
+                } else {
+
+                    holder.size.setText("Size: No Information Available");
+                    holder.dimensions.setText("Dimension: No Information Available");
+
+                }
             }
 
             @Override
@@ -114,10 +114,10 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.GridVi
 
         private void bindData(final int position) {
 
-            if(data.getPhoto().get(position).getTitle().equals(""))
+            if (data.getPhoto().get(position).getTitle().equals(""))
                 title.setText("Title : No Information Available");
             else {
-                title.setText("Title : "+ data.getPhoto().get(position).getTitle());
+                title.setText("Title : " + data.getPhoto().get(position).getTitle());
             }
 
             glide.load("http://farm2.staticflickr.com/" + data.getPhoto().get(position).getServer() + "/" +

@@ -16,8 +16,6 @@ import android.view.View;
 
 import com.example.harpalsingh.fabgallery.R;
 import com.example.harpalsingh.fabgallery.activities.MainActivity;
-import com.example.harpalsingh.fabgallery.genericApiCalls.GenericApiCalls;
-
 import java.util.Objects;
 
 public class Utilities {
@@ -52,9 +50,5 @@ public class Utilities {
             }
         }).setActionTextColor(Color.YELLOW);
         snackbar.show();
-    }
-
-    public static void doNetworkRequest(@Nullable Context context, View snackBarParentView) {
-        GenericApiCalls.doServerRequest(context,snackBarParentView);
     }
 }

@@ -20,7 +20,7 @@ import android.widget.RelativeLayout;
 
 import com.example.harpalsingh.fabgallery.R;
 import com.example.harpalsingh.fabgallery.adapters.GridViewAdapter;
-import com.example.harpalsingh.fabgallery.genericEventBus.GenericEventBus;
+import com.example.harpalsingh.fabgallery.models.AllData;
 import com.example.harpalsingh.fabgallery.models.Photos;
 import com.example.harpalsingh.fabgallery.utilities.NetworkStateChangeReceiver;
 import com.example.harpalsingh.fabgallery.utilities.Utilities;
@@ -67,8 +67,6 @@ public class MainActivity extends AppCompatActivity   {
 
         Utilities.setupToolbarAndNavigationBar(this, toolbar, navigationView, drawerLayout);
 
-        Utilities.doNetworkRequest(MainActivity.this, parentView);
-
         setupRecyclerView();
     }
 
@@ -79,32 +77,25 @@ public class MainActivity extends AppCompatActivity   {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
         recyclerView.setClipToPadding(false);
+        gridAdapter = new GridViewAdapter(this, AllData.getInstance().getPhotoData());
+        recyclerView.setAdapter(gridAdapter);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        EventBus.getDefault().register(this);
         Utilities.registerNetworkStateChangerReciever(this, networkBroadcast);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        EventBus.getDefault().unregister(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(networkBroadcast);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(GenericEventBus event) {
-        Photos photos = event.getPhotoData().getPhotos();
-        gridAdapter = new GridViewAdapter(this,photos);
-        recyclerView.setAdapter(gridAdapter);
     }
 
     @Override
@@ -117,8 +108,4 @@ public class MainActivity extends AppCompatActivity   {
         return super.onOptionsItemSelected(item);
     }
 
-    @OnClick(R.id.retry)
-    public void retry(View view) {
-        Utilities.doNetworkRequest(MainActivity.this, parentView);
-    }
 }

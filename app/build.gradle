@@ -60,4 +60,5 @@ dependencies {
 
     implementation 'com.github.scribejava:scribejava-apis:6.0.0'
     implementation group: 'com.github.scribejava', name: 'scribejava-core', version: '6.0.0'
+    implementation 'flickrj:flickrj:1.2'
 }

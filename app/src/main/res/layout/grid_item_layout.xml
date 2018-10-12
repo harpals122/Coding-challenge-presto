@@ -38,14 +38,14 @@
             android:layout_height="wrap_content"
             style="@style/BodyStyle"
             android:id="@+id/size"
-            android:layout_weight="1"
+            android:layout_weight=".8"
             android:layout_below="@+id/title"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             style="@style/BodyStyle"
-            android:layout_weight="1"
+            android:layout_weight="1.2"
             android:id="@+id/image_dimensions"
             android:layout_below="@+id/size"/>
 

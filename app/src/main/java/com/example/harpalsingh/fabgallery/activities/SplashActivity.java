@@ -8,7 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+
 import com.example.harpalsingh.fabgallery.R;
+import com.example.harpalsingh.fabgallery.models.AllData;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -23,9 +25,15 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent i = new Intent(SplashActivity.this, MainActivity.class);
-                startActivity(i);
-                finish();
+                if (AllData.getInstance().getPhotoData().getPhoto() != null) {
+                    Intent i = new Intent(SplashActivity.this, MainActivity.class);
+                    startActivity(i);
+                    finish();
+                } else {
+                    Intent i = new Intent(SplashActivity.this, LoginActivity.class);
+                    startActivity(i);
+                    finish();
+                }
             }
         }, delay);
     }

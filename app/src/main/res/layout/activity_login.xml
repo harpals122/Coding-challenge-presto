@@ -1,27 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_height="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-
-
-    <TextView
-        android:id="@+id/url"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text=""
-        android:textSize="20sp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.3"
+            android:orientation="vertical"
+            android:weightSum="2"
+            android:layout_margin="10dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/splash"
+                android:id="@+id/logo"/>
+
+            <WebView
+                android:id="@+id/simpleWebView"
+                android:layout_width="match_parent"
+              android:layout_height="match_parent"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:weightSum="0.7"
+            android:id="@+id/login_layout">
+
+            <TextView
+                android:id="@+id/url"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                style="@style/Header"
+                android:text="@string/lable"
+                android:textSize="20sp" />
 
 
-    <Button
-        android:id="@+id/dorequest"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Do request"
+            <Button
+                android:id="@+id/yahoo_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:gravity="center"
+                android:background="#198FFF"
+                android:textColor="@color/white"
+                android:text="@string/yahoo_login"
 
-        android:textSize="20sp" />
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:weightSum="0.7"
+            android:padding="10dp"
+            android:visibility="gone"
+            android:id="@+id/continue_layout">
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                style="@style/Header"
+                android:text="@string/lableTwo"
+                android:textSize="20sp" />
+
+            <EditText
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Header"
+                android:id="@+id/auth_code"
+                android:hint="Enter code"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:background="#198FFF"
+                android:textColor="@color/white"
+                android:text="@string/login"
+                />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

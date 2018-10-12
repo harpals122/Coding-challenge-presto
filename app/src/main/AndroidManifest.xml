@@ -40,7 +40,9 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activities.LoginActivity"></activity>
+        <activity android:name=".activities.LoginActivity"
+            android:hardwareAccelerated="true"
+            />
     </application>
 
 </manifest>

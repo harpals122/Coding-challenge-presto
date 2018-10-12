@@ -23,4 +23,8 @@
     <string name="home">Home</string>
     <string name="collections">Collections</string>
     <string name="search">Search</string>
+    <string name="login">Login</string>
+    <string name="lable">Login To proceed</string>
+    <string name="lableTwo"> Login And Enter 9 Digit Code Bellow</string>
+    <string name="yahoo_login">Yahoo Login</string>
 </resources>
