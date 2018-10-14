@@ -21,3 +21,9 @@ The following should be implemented in order to complete this challenge:
 2. A means of displaying this information in a list structure
 Scalability is paramount. The code you build should not end up being a bottleneck down the
 road (will this have to be rebuilt when it’s pulling from millions of images from many sources?).
+
+Solution :
+Live working app can be found at Google play store. Link as bellow:
+
+https://play.google.com/store/apps/details?id=com.fab.harpalsingh.fabgallery
+
