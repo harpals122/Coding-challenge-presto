@@ -3,4 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="text_view_default_color">#000</color>
+    <color name="light_silver">#FCDDB5</color>
+    <color name="silver">#FDF8F2</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000</color>
+    <color name="progressbar_background">#EDEDEE</color>
+    <color name="black_overlay">#66000000</color>
 </resources>

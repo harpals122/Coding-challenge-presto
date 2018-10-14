@@ -1,4 +1,4 @@
-package com.example.harpalsingh.fabgallery;
+package com.fab.harpalsingh.fabgallery;
 
 import org.junit.Test;
 

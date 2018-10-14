@@ -1,3 +1,35 @@
 <resources>
     <string name="app_name">Fab Gallery</string>
+    <string name="account_name_text">Harpal Singh</string>
+    <string name="author_name">Harpal Singh</string>
+    <string name="facebook">Facebook</string>
+    <string name="callUs">Call Now</string>
+    <string name="linkedin">LinkedIn</string>
+    <string name="email">Email</string>
+    <string name="name_lable">Author</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_snap_detail">Detail Activity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="something_went_wrong">Something Went Wrong Please Try Again</string>
+    <string name="oh_no">Oh No!</string>
+    <string name="retry">Retry</string>
+    <string name="splash_image">Splash screen image</string>
+    <string name="disconnected">When Wifi is not connected</string>
+    <string name="placeholder">Place holder for image</string>
+    <string name="unsplash_image">Main image from Flikr api</string>
+    <string name="profile_image">profile image of Harpal singh</string>
+    <string name="user_image">User image</string>
+    <string name="home">Home</string>
+    <string name="collections">Collections</string>
+    <string name="search">Search</string>
+    <string name="login">Login</string>
+    <string name="lable">Login To proceed</string>
+    <string name="lableTwo"> 1. Login 2. Give Authorization \n 3. Get Nine Digit Code 4. Enter Below</string>
+    <string name="yahoo_login">Yahoo Login</string>
+    <string name="errorSizeInformation">Size : Error Loading information</string>
+    <string name="errorSizeDimension">Dimension: Error Loading information</string>
+    <string name="noTitle">Title : No Information Available</string>
+    <string name="titleLable">Title :</string>
+    <string name="lableThree">Steps</string>
 </resources>
